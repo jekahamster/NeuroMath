@@ -47,13 +47,13 @@ class NeuralNetwork:
 	def saveAs(self, fileName):
 		data = {
 			"inodes": self.inodes,
-			"hnodes": self.hnodes, 
+			"hnodes": self.hnodes,
 			"onodes": self.onodes,
 			"lr"	: self.lr,
 			"wih"	: self.wih.tolist(),
-			"who"	: self.who.tolist()	
+			"who"	: self.who.tolist()
 		}
-		
+
 		with open(fileName, "w") as file:
 			json.dump(data, file)
 

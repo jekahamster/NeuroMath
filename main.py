@@ -1,6 +1,6 @@
 from PIL import Image
 import json
-import numpy
+import numpy as np
 import NeuralNetwork as NN
 
 n = NN.NeuralNetwork()
@@ -9,9 +9,9 @@ n.loadFrom("NN.json")
 while (True):
 	try:
 		img = Image.open(input("Path: ")).convert("I")
-		pix = abs(numpy.array(img) - 255)
-		pix = numpy.ravel(pix)
-		inputs = (numpy.asfarray(pix) / 255 * 0.98) + 0.01
+		pix = abs(np.array(img) - 255)
+		pix = np.ravel(pix)
+		inputs = (np.asfarray(pix) / 255 * 0.98) + 0.01
 		output = n.query(inputs)
 		label = np.argmax(output)
 		userResponce = input("It is "+str(label)+"? (y/n): ")

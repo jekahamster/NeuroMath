@@ -1,6 +1,7 @@
-i = 60000
-l = 60000
+import NeuralNetwork2 as NN
 
+n = NN.NeuralNetwork()
+n.init(0.2, [784, 100, 10])
 
-print("="*int(i*100/l/10)-1+">")
-print(30000/60000)
+for i in range(3-1, -1, -1):
+    print(i)
