@@ -1,0 +1,41 @@
+
+
+<Container>:
+    orientation: 'horizontal'
+    padding: 10
+    spacing: 30
+    AnchorLayout:
+
+        Widget:
+            canvas.before:
+                Color:
+                    rgba: .0, .0, .0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        AnchorLayout:
+            MDTextField:
+                foreground_color: [0, 0, 0, 1]
+                background_color: [1, 1, 1, 1]
+                hint_text: "Number"
+
+        AnchorLayout:
+            BoxLayout:
+                orientation: "vertical"
+                MDLabel:
+                    text: "Correct?"
+                    foreground_color: [0, 0, 0, 1]
+                BoxLayout:
+                    orientation: "horizontal"
+                    spacing: 10
+                    MDRaisedButton:
+                        text: "No"
+                    MDRaisedButton:
+                        text: "Yes"
+
+
+        AnchorLayout:
+            MDRaisedButton:
+                text: "DO IT"
