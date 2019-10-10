@@ -1,7 +1,13 @@
-import NeuralNetwork2 as NN
+from kivy.app import App
+from kivy.uix.label import Label
 
-n = NN.NeuralNetwork()
-n.init(0.2, [784, 100, 10])
+class TestApp(App):
+    def build(self):
+        return Label(text=self.a)
 
-for i in range(3-1, -1, -1):
-    print(i)
+    def init(self, a):
+        self.a = a
+
+t = TestApp()
+t.init("asd")
+t.run()

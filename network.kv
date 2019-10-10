@@ -1,12 +1,13 @@
 
-
 <Container>:
+    pos: 0, 0
     orientation: 'horizontal'
     padding: 10
     spacing: 30
-    AnchorLayout:
 
-        Widget:
+    AnchorLayout:
+        CanvasWidget:
+            id: canvas_widget
             canvas.before:
                 Color:
                     rgba: .0, .0, .0, 1
@@ -35,6 +36,51 @@
                     MDRaisedButton:
                         text: "Yes"
 
+        BoxLayout:
+            orientation: "horizontal"
+            BoxLayout:
+                orientation: "vertical"
+                MDLabel:
+                    text: "Pen"
+                MDCheckbox:
+                    group: "1"
+                    size_hint: None, None
+                    size: 50, 50
+                    on_release:
+                        root.changeColor(1)
+            BoxLayout:
+                orientation: "vertical"
+                MDLabel:
+                    text: "Lastic"
+                MDCheckbox:
+                    group: "1"
+                    size_hint: None, None
+                    size: 50, 50
+                    on_release:
+                        root.changeColor(0)
+
+        BoxLayout:
+            orientation: "vertical"
+            AnchorLayout:
+                MDSlider:
+                    id: slider
+                    min: 5
+                    max: 20
+                    step: 1
+                    on_touch_up:
+                        root.changeBrushSize(self.value)
+
+
+            AnchorLayout:
+                MDLabel:
+                    foreground_color: [0, 0, 0]
+                    text: str(slider.value)
+
+        AnchorLayout:
+            MDRaisedButton:
+                text: "CLEAR"
+                on_release:
+                    root.clear(canvas_widget)
 
         AnchorLayout:
             MDRaisedButton:
