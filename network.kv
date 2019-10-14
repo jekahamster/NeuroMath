@@ -16,72 +16,88 @@
                     size: self.size
     BoxLayout:
         orientation: 'vertical'
-        AnchorLayout:
-            MDTextField:
-                foreground_color: [0, 0, 0, 1]
-                background_color: [1, 1, 1, 1]
-                hint_text: "Number"
-
-        AnchorLayout:
-            BoxLayout:
-                orientation: "vertical"
-                MDLabel:
-                    text: "Correct?"
-                    foreground_color: [0, 0, 0, 1]
-                BoxLayout:
-                    orientation: "horizontal"
-                    spacing: 10
-                    MDRaisedButton:
-                        text: "No"
-                    MDRaisedButton:
-                        text: "Yes"
-
-        BoxLayout:
-            orientation: "horizontal"
-            BoxLayout:
-                orientation: "vertical"
-                MDLabel:
-                    text: "Pen"
-                MDCheckbox:
-                    group: "1"
-                    size_hint: None, None
-                    size: 50, 50
-                    on_release:
-                        root.changeColor(1)
-            BoxLayout:
-                orientation: "vertical"
-                MDLabel:
-                    text: "Lastic"
-                MDCheckbox:
-                    group: "1"
-                    size_hint: None, None
-                    size: 50, 50
-                    on_release:
-                        root.changeColor(0)
+        spacing: 20
 
         BoxLayout:
             orientation: "vertical"
-            AnchorLayout:
-                MDSlider:
-                    id: slider
-                    min: 5
-                    max: 20
-                    step: 1
-                    on_touch_up:
-                        root.changeBrushSize(self.value)
-
 
             AnchorLayout:
-                MDLabel:
-                    foreground_color: [0, 0, 0]
-                    text: str(slider.value)
+                MDTextField:
+                    foreground_color: [0, 0, 0, 1]
+                    background_color: [1, 1, 1, 1]
+                    hint_text: "Number"
 
-        AnchorLayout:
-            MDRaisedButton:
-                text: "CLEAR"
-                on_release:
-                    root.clear(canvas_widget)
+            AnchorLayout:
+                BoxLayout:
+                    orientation: "horizontal"
 
-        AnchorLayout:
-            MDRaisedButton:
-                text: "DO IT"
+                    MDLabel:
+                        text: "Correct?"
+                        foreground_color: [0, 0, 0, 1]
+                    BoxLayout:
+                        orientation: "horizontal"
+                        spacing: 10
+                        MDRaisedButton:
+                            text: "No"
+                        MDRaisedButton:
+                            text: "Yes"
+        BoxLayout:
+            orientation: "vertical"
+
+            BoxLayout:
+                orientation: "horizontal"
+                BoxLayout:
+                    orientation: "vertical"
+                    MDLabel:
+                        text: "Pen"
+                    MDCheckbox:
+                        active: True
+                        group: "1"
+                        size_hint: None, None
+                        size: 50, 50
+                        on_release:
+                            root.changeColor(1)
+                BoxLayout:
+                    orientation: "vertical"
+                    MDLabel:
+                        text: "Lastic"
+                    MDCheckbox:
+                        group: "1"
+                        size_hint: None, None
+                        size: 50, 50
+                        on_release:
+                            root.changeColor(0)
+
+            BoxLayout:
+                orientation: "horizontal"
+
+                AnchorLayout:
+                    MDSlider:
+                        id: slider
+                        min: 1
+                        max: 30
+                        step: 1
+                        value: 5
+                        on_touch_up:
+                            root.changeBrushSize(self.value)
+
+                AnchorLayout:
+                    size_hint: 0.1, 1
+
+                    MDLabel:
+                        foreground_color: [0, 0, 0]
+                        text: str(slider.value)
+
+        BoxLayout:
+            orientation: "horizontal"
+            AnchorLayout:
+                MDRaisedButton:
+                    text: "CLEAR"
+                    on_release:
+                        root.clear(canvas_widget)
+
+            AnchorLayout:
+                MDRaisedButton:
+                    text: "DO IT"
+                    on_release:
+                        root.recognize(canvas_widget)

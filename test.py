@@ -1,13 +1,10 @@
-from kivy.app import App
-from kivy.uix.label import Label
+import cv2
+import numpy as np
+import random
 
-class TestApp(App):
-    def build(self):
-        return Label(text=self.a)
 
-    def init(self, a):
-        self.a = a
+array = np.array([[0 for i in range(28+9)] for j in range(28+9)], dtype=np.uint8)
+print(array)
 
-t = TestApp()
-t.init("asd")
-t.run()
+cv2.imshow("", array)
+cv2.waitKey(0)

@@ -1,4 +1,5 @@
 from win32api import GetSystemMetrics
+from NumberFinder import NumberFinder
 
 from kivy.app import App
 from kivy.config import Config
@@ -14,15 +15,14 @@ from kivymd.theming import ThemeManager
 WINDOW_WIDTH  = GetSystemMetrics(0)
 WINDOW_HEIGHT = GetSystemMetrics(1)
 
-Config.set("graphics", "resizable", "0")
-Config.set("graphics", "width", "10000")
-Config.set("graphics", "height", "500")
+# Config.set("graphics", "resizable", "")
+# Config.set("graphics", "width", "100")
+# Config.set("graphics", "height", "500")
 
 Window.clearcolor = (.70, .70, .70, 1)
 
 color = 1
 brushSize = 5
-print(CheckBox().events())
 
 class Container(BoxLayout):
     def changeColor(self, c):
@@ -37,6 +37,12 @@ class Container(BoxLayout):
         with c.canvas:
             Color(0, 0, 0)
             Rectangle(pos=c.pos, size=c.size)
+
+    def recognize(self, canvas):
+        PATH = "temp/temp_img.png"
+        canvas.export_to_png(PATH)
+        NumberFinder().find(PATH)
+
 
 
 class CanvasWidget(Widget):
@@ -62,7 +68,6 @@ class CanvasWidget(Widget):
             touch.ud['line'] = Line(points=(touch.x, touch.y), width=brushSize)
 
     def on_touch_move(self, touch):
-        print(1)
         global brushSize
         if (touch.x > self.pos[0]+self.size[0]-brushSize):
             return
