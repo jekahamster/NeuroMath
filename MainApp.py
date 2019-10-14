@@ -1,5 +1,6 @@
 from win32api import GetSystemMetrics
 from NumberFinder import NumberFinder
+from Recognizer import Recognizer
 
 from kivy.app import App
 from kivy.config import Config
@@ -41,8 +42,9 @@ class Container(BoxLayout):
     def recognize(self, canvas):
         PATH = "temp/temp_img.png"
         canvas.export_to_png(PATH)
-        NumberFinder().find(PATH)
-
+        imgList = NumberFinder().find(PATH)
+        r = Recognizer()
+        r.recognize(imgList)
 
 
 class CanvasWidget(Widget):

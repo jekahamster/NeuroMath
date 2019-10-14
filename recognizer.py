@@ -1,26 +1,29 @@
 from PIL import Image
 import json
 import numpy as np
-import NeuralNetwork as NN
+import NeuralNetwork2 as NN
 
-n = NN.NeuralNetwork()
-n.loadFrom("NN.json")
 
-while (True):
-	try:
-		img = Image.open(input("Path: ")).convert("I")
-		pix = abs(np.array(img) - 255)
-		pix = np.ravel(pix)
-		inputs = (np.asfarray(pix) / 255 * 0.98) + 0.01
-		output = n.query(inputs)
-		label = np.argmax(output)
-		userResponce = input("It is "+str(label)+"? (y/n): ")
-		if (userResponce.lower() == "n"):
-			targets = np.zeros(10) + 0.01
-			targets[int(input("Correct ans: "))] = 0.99
-			n.train(inputs, targets)
-			n.saveAs("NN.json")
-	except ValueError:
-		print("ValueError")
-	except FileNotFoundError:
-		print("FileNotFoundError")
+class Recognizer():
+    operatorsLabel = ['+', '-', '/', '*', '']
+
+    def __init__(self):
+        self.nNumbers = NN.NeuralNetwork()
+        self.nOperators = NN.NeuralNetwork()
+        self.nNumbers.loadFrom("NNNumbers.json")
+        self.nOperators.loadFrom("NNOperators.json")
+
+
+    def recognize(self, imgList):
+        for img in imgList:
+            img = np.ravel(img)
+            inputs = (np.asfarray(img) / 255 * 0.98) + 0.01
+            output = self.nOperators.query(inputs)
+            if self.operatorsLabel[np.argmax(output)] == "":
+                output = self.nNumbers.query(inputs)
+                print(np.argmax(output))
+            else:
+                print(self.operatorsLabel[np.argmax(output)])
+
+        print()
+        # print( self.operatorsLabel[np.argmax(outputs)] )

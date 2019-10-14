@@ -77,9 +77,7 @@ class NumberFinder():
             # newResImg = tempResImg.resize(tempResImg, (28, 28))
             img = cv2.rectangle(img,(rectCoords[0],rectCoords[1]),
             (rectCoords[0]+rectCoords[2],rectCoords[1]+rectCoords[3]),(0,255,0),2)
-            cv2.imshow("final", finalResImg)
             cv2.imwrite("temp/t"+str(k)+".png", finalResImg)
-            cv2.waitKey(0)
 
 
         cv2.imwrite("temp/temp_img2.png", cropImg)

@@ -3,13 +3,10 @@ import scipy.special
 import json
 
 class NeuralNetwork():
-	activationFunction 	= None
-	nodes 				= []
-	weights 			= []
-	lr 					= None
-
-
 	def __init__(self):
+		self.nodes 				= []
+		self.weights 			= []
+		self.lr 					= None
 		self.activationFunction = lambda x: scipy.special.expit(x)
 
 	def init(self, lr, nodes):

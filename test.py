@@ -1,10 +1,8 @@
-import cv2
+import NeuralNetwork2 as NN
+from PIL import Image
 import numpy as np
-import random
 
-
-array = np.array([[0 for i in range(28+9)] for j in range(28+9)], dtype=np.uint8)
-print(array)
-
-cv2.imshow("", array)
-cv2.waitKey(0)
+n = NN.NeuralNetwork()
+n.init(0.3, [28*28, 100, 10])
+print(len(n.weights[1]))
+print(len(n.weights[1][0]))
