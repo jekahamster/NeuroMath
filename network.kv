@@ -6,6 +6,7 @@
     spacing: 30
 
     AnchorLayout:
+        size_hint: 1.5, 1
         CanvasWidget:
             id: canvas_widget
             canvas.before:
@@ -23,6 +24,7 @@
 
             AnchorLayout:
                 MDTextField:
+                    id: text_input
                     foreground_color: [0, 0, 0, 1]
                     background_color: [1, 1, 1, 1]
                     hint_text: "Number"
@@ -34,13 +36,10 @@
                     MDLabel:
                         text: "Correct?"
                         foreground_color: [0, 0, 0, 1]
-                    BoxLayout:
-                        orientation: "horizontal"
-                        spacing: 10
-                        MDRaisedButton:
-                            text: "No"
-                        MDRaisedButton:
-                            text: "Yes"
+                    MDRaisedButton:
+                        text: "Adjust"
+                        on_release:
+                            root.adjust(text_input.text)
         BoxLayout:
             orientation: "vertical"
 
@@ -75,7 +74,7 @@
                     MDSlider:
                         id: slider
                         min: 1
-                        max: 30
+                        max: 40
                         step: 1
                         value: 5
                         on_touch_up:

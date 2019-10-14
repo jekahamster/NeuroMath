@@ -1,0 +1,5 @@
+{
+  "OperatorsNetworkPath": "NNOperators.json",
+  "OperandsNetworkPath":  "NNNumbers.json",
+  "CanvasImg":            "temp/temp_img.png",
+}

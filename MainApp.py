@@ -1,5 +1,5 @@
 from win32api import GetSystemMetrics
-from NumberFinder import NumberFinder
+from SymbolFinder import SymbolFinder
 from Recognizer import Recognizer
 
 from kivy.app import App
@@ -26,6 +26,11 @@ color = 1
 brushSize = 5
 
 class Container(BoxLayout):
+    prevAns = ""
+    imgList = None
+    recognizer = Recognizer()
+
+
     def changeColor(self, c):
         global color
         color = c
@@ -42,9 +47,18 @@ class Container(BoxLayout):
     def recognize(self, canvas):
         PATH = "temp/temp_img.png"
         canvas.export_to_png(PATH)
-        imgList = NumberFinder().find(PATH)
-        r = Recognizer()
-        r.recognize(imgList)
+        self.imgList = SymbolFinder().find(PATH)
+        outputList = self.recognizer.recognize(self.imgList)
+        self.ids.text_input.text = "".join(outputList)
+        self.prevAns = ""
+
+    def adjust(self, text):
+        if text == self.prevAns:
+            return
+        else:
+            self.prevAns = text
+        text = list(text)
+        self.recognizer.adjust(self.imgList, text)
 
 
 class CanvasWidget(Widget):

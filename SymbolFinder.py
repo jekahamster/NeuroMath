@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 
-class NumberFinder():
+class SymbolFinder():
     def find(self, imgPath):
         img = cv2.imread(imgPath)
         imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
