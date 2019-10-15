@@ -6,8 +6,9 @@ class NeuralNetwork():
 	def __init__(self):
 		self.nodes 				= []
 		self.weights 			= []
-		self.lr 					= None
+		self.lr 				= None
 		self.activationFunction = lambda x: scipy.special.expit(x)
+		self.scores 			= None
 
 	def init(self, lr, nodes):
 		self.nodes 	= nodes
@@ -50,6 +51,9 @@ class NeuralNetwork():
 
 
 	def saveAs(self, fileName, scores=None):
+		if (scores == None):
+			scores = self.scores
+
 		weights = []
 		for i in range(len(self.weights)):
 			weights.append(self.weights[i].tolist())
@@ -69,6 +73,7 @@ class NeuralNetwork():
 		with open(fileName, "r") as file:
 			data = json.load(file)
 
+		self.scores = data["scores"]
 		self.nodes 	= data["nodes"]
 		self.lr		= data["lr"]
 		for i in range(len(data["weights"])):
