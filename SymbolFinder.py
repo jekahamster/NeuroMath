@@ -16,7 +16,6 @@ class SymbolFinder():
 
 
         tempCoordsX = [x]
-        # cv2.line(img, (x, y), (x, y+h), (0, 255, 0), 2)
         white = True
         for i in range(x, x+w):
             for j in range(y, y+h):
@@ -57,11 +56,6 @@ class SymbolFinder():
 
             temp = [np.zeros(maxL, dtype=np.uint8) for i in range(maxL)]
             temp_arr = np.array(temp, dtype=np.uint8)
-            # print(len(temp_arr))
-            # print(len(temp_arr[0]))
-
-            # print(tempWl)
-            # print(len(tempSymbol[0]))
 
             for i in range(tempHl):
                 for j in range(tempWl):
@@ -77,10 +71,10 @@ class SymbolFinder():
             # newResImg = tempResImg.resize(tempResImg, (28, 28))
             img = cv2.rectangle(img,(rectCoords[0],rectCoords[1]),
             (rectCoords[0]+rectCoords[2],rectCoords[1]+rectCoords[3]),(0,255,0),2)
-            cv2.imwrite("temp/t"+str(k)+".png", finalResImg)
+            # cv2.imwrite("temp/t"+str(k)+".png", finalResImg)
 
 
-        cv2.imwrite("temp/temp_img2.png", cropImg)
+        # cv2.imwrite("temp/temp_img2.png", cropImg)
         cv2.imshow("", img)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
