@@ -50,5 +50,5 @@ class Recognizer():
                 while(np.argmax(self.nNumbers.query(inputs)) != label):
                     self.nNumbers.train(inputs, numbersTargets)
                     print("Number")
-        nNumbers.saveAs("NNNumbers.json")
-        nOperators.saveAs("NNOperators.json")
+        self.nNumbers.saveAs("NNNumbers.json")
+        self.nOperators.saveAs("NNOperators.json")
