@@ -49,7 +49,14 @@ class Container(BoxLayout):
         canvas.export_to_png(PATH)
         self.imgList = SymbolFinder().find(PATH)
         outputList = self.recognizer.recognize(self.imgList)
-        self.ids.text_input.text = "".join(outputList)
+        temp_str = "".join(outputList)
+        self.ids.text_input.text = temp_str
+        try:
+            self.ids.text_input.text += "=" + str(eval(temp_str))
+        except SyntaxError:
+            pass
+        except ZeroDivisionError:
+            pass
         self.prevAns = ""
 
     def adjust(self, text):

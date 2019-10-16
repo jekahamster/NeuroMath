@@ -29,7 +29,8 @@ class Recognizer():
         return result
 
     def adjust(self, imgList, correctLabel):
-        for i in range(len(correctLabel)):
+        print(correctLabel[:len(imgList)])
+        for i in range(len(imgList)):
             img = np.ravel(imgList[i])
             inputs = (np.asfarray(img) / 255 * 0.98) + 0.01
 
