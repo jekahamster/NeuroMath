@@ -3,7 +3,9 @@ import numpy as np
 
 
 class SymbolFinder():
-    def find(self, imgPath):
+
+    @staticmethod
+    def find(imgPath):
         img = cv2.imread(imgPath)
         imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         height, width = img.shape[:2]

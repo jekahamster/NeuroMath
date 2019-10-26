@@ -1,7 +1,7 @@
 from PIL import Image
 import json
 import numpy as np
-import NeuralNetwork2 as NN
+import NeuralNetwork as NN
 
 n = NN.NeuralNetwork()
 n.loadFrom("NNNumbers.json")

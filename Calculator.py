@@ -55,13 +55,3 @@ class Calculator():
             else:
                 break
         return [newStr, pointer+1, findex]
-
-string = "5!"
-
-ans, mode = Calculator.calc(string)
-if mode == Calculator.DEFAULT:
-    print(string)
-elif mode == Calculator.EQUALITY:
-    print(string+" = "+str(ans))
-elif mode == Calculator.INEQUALITY:
-    print(string+" is "+str(ans))

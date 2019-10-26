@@ -1,11 +1,14 @@
+from SettingsController import SettingsController
 from PIL import Image
 import json
 import numpy as np
-import NeuralNetwork2 as NN
+import NeuralNetwork as NN
+
+SettingsController.loadFrom()
 
 n = NN.NeuralNetwork()
-n.loadFrom("NNOperators.json")
-labels = ['+', '-', '/', '*', '']
+n.loadFrom(SettingsController.operatorsNetworkPath)
+labels = SettingsController.operatorLabels
 while (True):
 	try:
 		img = Image.open(input("Path: ")).convert("I")
@@ -19,12 +22,12 @@ while (True):
 			targets = np.zeros(len(labels)) + 0.01
 			targets[int(labels.index(input("Correct ans: ")))] = 0.99
 			n.train(inputs, targets)
-			n.saveAs("NNOperators.json")
+			n.saveAs(SettingsController.operatorsNetworkPath)
 		elif (userResponce.lower() == "y"):
 			targets = np.zeros(len(labels)) + 0.01
 			targets[label] = 0.99
 			n.train(inputs, targets)
-			n.saveAs("NNOperators.json")
+			n.saveAs(SettingsController.operatorsNetworkPath)
 
 	except ValueError:
 		print("ValueError")

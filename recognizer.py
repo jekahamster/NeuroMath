@@ -1,16 +1,17 @@
 import numpy as np
-import NeuralNetwork2 as NN
-
+import NeuralNetwork as NN
+from SettingsController import SettingsController
+SettingsController.loadFrom(SettingsController.DEFAULT_PATH)
 
 class Recognizer():
-    operatorsLabel = ['+', '-', '/', '*', '']
-    numbersLabel = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    operatorsLabel  = SettingsController.operatorLabels
+    numbersLabel    = SettingsController.numberLabels
 
     def __init__(self):
         self.nNumbers = NN.NeuralNetwork()
         self.nOperators = NN.NeuralNetwork()
-        self.nNumbers.loadFrom("NNNumbers.json")
-        self.nOperators.loadFrom("NNOperators.json")
+        self.nNumbers.loadFrom(SettingsController.numbersNetworkPath)
+        self.nOperators.loadFrom(SettingsController.operatorsNetworkPath)
 
 
     def recognize(self, imgList):
@@ -42,7 +43,7 @@ class Recognizer():
                     print("Oper")
             else:
                 operatorsTargets = np.zeros(len(self.operatorsLabel)) + 0.01
-                operatorsTargets[4] = 0.99
+                operatorsTargets[len(self.operatorsLabel)-1] = 0.99
                 self.nOperators.train(inputs, operatorsTargets)
 
                 label = int(correctLabel[i])
@@ -51,5 +52,5 @@ class Recognizer():
                 while(np.argmax(self.nNumbers.query(inputs)) != label):
                     self.nNumbers.train(inputs, numbersTargets)
                     print("Number")
-        self.nNumbers.saveAs("NNNumbers.json")
-        self.nOperators.saveAs("NNOperators.json")
+        self.nNumbers.saveAs(SettingsController.numbersNetworkPath)
+        self.nOperators.saveAs(SettingsController.operatorsNetworkPath)

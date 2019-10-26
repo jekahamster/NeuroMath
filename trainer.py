@@ -4,18 +4,18 @@ import NeuralNetwork as NN
 inputNodes   = 28*28
 hiddenNodes  = 100
 outputNodes  = 10
-learningRate = 0.2
-epochs 		 = 5
+learningRate = 0.1
+epochs 		 = 10
 
 n = NN.NeuralNetwork()
-n.init(inputNodes, hiddenNodes, outputNodes, learningRate)
+n.init(learningRate, [inputNodes, hiddenNodes, outputNodes])
 
 dataFile = open("mnist_dataset/mnist_train.csv", "r")
 dataList = dataFile.readlines()
 dataFile.close()
 
-i = 0
 for e in range(epochs):
+	i = 0
 	for data in dataList:
 		allValues  	= data.split(",")
 		inputs 		= (np.asfarray(allValues[1:]) / 255 * 0.99) + 0.01
@@ -26,6 +26,7 @@ for e in range(epochs):
 		print("Epoch #", e+1)
 		print("Example #", i)
 		print()
+
 
 
 trainFile = open("mnist_dataset/mnist_test.csv", "r")
@@ -39,16 +40,16 @@ for train in trainList:
 	correctLabel = int(allValues[0])
 	print("Corret label is", correctLabel)
 	inputs  = (np.asfarray(allValues[1:]) / 255 * 0.99) + 0.01
-	print(inputs)
 	outputs = n.query(inputs)
 	label = np.argmax(outputs)
 	print("Network respone is", label)
 	print()
 	scorecard.append(correctLabel == label)
 
-n.saveAs("NN2.json")
-
 print("Report: ", scorecard)
 print("Total:", len(scorecard))
 print("Correct:", sum(scorecard))
 print(sum(scorecard) / len(scorecard))
+
+if (input("Save model(y/n)? ") == "y"):
+	n.saveAs(input("File name: "), sum(scorecard)/len(scorecard))

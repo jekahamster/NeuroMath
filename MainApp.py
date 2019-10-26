@@ -1,26 +1,32 @@
 from win32api import GetSystemMetrics
 from SymbolFinder import SymbolFinder
 from Recognizer import Recognizer
+from SettingsController import SettingsController
+from Calculator import Calculator
 
-from kivy.app import App
+import kivy
 from kivy.config import Config
+SettingsController.loadFrom(SettingsController.DEFAULT_PATH)
+Config.set("graphics", "resizable", SettingsController.windowResizable)
+Config.set("graphics", "width", SettingsController.windowWidth)
+Config.set("graphics", "height", SettingsController.windowHeight)
+from kivy.app import App
 from kivy.core.window import Window
+from kivy.graphics import Color, Ellipse, Line, Rectangle
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
-from kivy.graphics import Color, Ellipse, Line, Rectangle
 from kivymd.theming import ThemeManager
+
 
 WINDOW_WIDTH  = GetSystemMetrics(0)
 WINDOW_HEIGHT = GetSystemMetrics(1)
 
-# Config.set("graphics", "resizable", "")
-# Config.set("graphics", "width", "100")
-# Config.set("graphics", "height", "500")
-
-Window.clearcolor = (.70, .70, .70, 1)
+# Config.write()
+# Window.size = (900, 500)
+# Window.clearcolor = (.70, .70, .70, 1)
 
 color = 1
 brushSize = 5
@@ -45,17 +51,25 @@ class Container(BoxLayout):
             Rectangle(pos=c.pos, size=c.size)
 
     def recognize(self, canvas):
-        PATH = "temp/temp_img.png"
+        PATH = SettingsController.canvasImg
         canvas.export_to_png(PATH)
-        self.imgList = SymbolFinder().find(PATH)
+        self.imgList = SymbolFinder.find(PATH)
         outputList = self.recognizer.recognize(self.imgList)
-        temp_str = "".join(outputList)
-        self.ids.text_input.text = temp_str
+        outputStr = "".join(outputList)
+        self.ids.text_input.text = outputStr
         try:
-            self.ids.text_input.text += "=" + str(eval(temp_str))
+            ans, mode = Calculator.calc(outputStr)
+            if mode == Calculator.DEFAULT:
+                pass
+            elif mode == Calculator.EQUALITY:
+                self.ids.text_input.text += " = "+str(ans)
+            elif mode == Calculator.INEQUALITY:
+                self.ids.text_input.text += " is "+str(ans)
         except SyntaxError:
             pass
         except ZeroDivisionError:
+            pass
+        except TypeError:
             pass
         self.prevAns = ""
 
