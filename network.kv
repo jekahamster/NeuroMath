@@ -25,7 +25,7 @@
             AnchorLayout:
                 MDTextField:
                     id: text_input
-                    foreground_color: [0, 0, 0, 1]
+                    # foreground_color: [0, 0, 0, 1]
                     background_color: [1, 1, 1, 1]
                     hint_text: "Number"
 
@@ -35,7 +35,7 @@
 
                     MDLabel:
                         text: "Correct?"
-                        foreground_color: [0, 0, 0, 1]
+                        color: [1, 1, 1, 1]
                     MDRaisedButton:
                         text: "Adjust"
                         on_release:
@@ -49,6 +49,7 @@
                     orientation: "vertical"
                     MDLabel:
                         text: "Pen"
+                        color: [1, 1, 1, 1]
                     MDCheckbox:
                         active: True
                         group: "1"
@@ -60,6 +61,7 @@
                     orientation: "vertical"
                     MDLabel:
                         text: "Lastic"
+                        color: [1, 1, 1, 1]
                     MDCheckbox:
                         group: "1"
                         size_hint: None, None
@@ -84,7 +86,7 @@
                     size_hint: 0.1, 1
 
                     MDLabel:
-                        foreground_color: [0, 0, 0]
+                        color: [1, 1, 1, 1]
                         text: str(slider.value)
 
         BoxLayout:
@@ -100,3 +102,13 @@
                     text: "DO IT"
                     on_release:
                         root.recognize(canvas_widget)
+        AnchorLayout:
+            size_hint: 1, None
+            size: 0, 5
+            MDLabel:
+                text: "By Golovko"
+                anchor_x: "center"
+                anchor_y: "center"
+                halign: "center"
+                color: [1, 1, 1, 1]
+                font_size: "10sp"

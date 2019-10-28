@@ -36,7 +36,6 @@ class Container(BoxLayout):
     imgList = None
     recognizer = Recognizer()
 
-
     def changeColor(self, c):
         global color
         color = c
@@ -46,6 +45,7 @@ class Container(BoxLayout):
         brushSize = d
 
     def clear(self, c):
+        self.ids.text_input.text = ""
         with c.canvas:
             Color(0, 0, 0)
             Rectangle(pos=c.pos, size=c.size)
@@ -122,9 +122,10 @@ class CanvasWidget(Widget):
 
 class NetworkApp(App):
     theme_cls = ThemeManager()
-    title = "NetworkApp"
+    title = "NeuroMath"
     def build(self):
-        self.theme_cls.theme_style = "Light"
+        self.theme_cls.theme_style = SettingsController.theme
+        self.theme_cls.primary_palette = SettingsController.primaryPalette
         return Container()
 
 

@@ -16,3 +16,5 @@ class SettingsController():
         SettingsController.windowHeight         = data["WindowHeight"]
         SettingsController.windowWidth          = data["WindowWidth"]
         SettingsController.windowResizable      = data["WindowResizable"]
+        SettingsController.theme                = data["Theme"]
+        SettingsController.primaryPalette       = data["PrimaryPalette"]
