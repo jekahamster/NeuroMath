@@ -18,3 +18,4 @@ class SettingsController():
         SettingsController.windowResizable      = data["WindowResizable"]
         SettingsController.theme                = data["Theme"]
         SettingsController.primaryPalette       = data["PrimaryPalette"]
+        SettingsController.adjustAll            = bool(data["AdjustAll"])

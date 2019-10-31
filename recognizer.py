@@ -38,9 +38,13 @@ class Recognizer():
             if correctLabel[i] in self.operatorsLabel:
                 operatorsTargets = np.zeros(len(self.operatorsLabel)) + 0.01
                 operatorsTargets[self.operatorsLabel.index(correctLabel[i])] = 0.99
-                while(np.argmax(self.nOperators.query(inputs)) != self.operatorsLabel.index(correctLabel[i])):
+                if (SettingsController.adjustAll):
                     self.nOperators.train(inputs, operatorsTargets)
                     print("Oper")
+                else:
+                    while(np.argmax(self.nOperators.query(inputs)) != self.operatorsLabel.index(correctLabel[i])):
+                        self.nOperators.train(inputs, operatorsTargets)
+                        print("Oper")
             else:
                 operatorsTargets = np.zeros(len(self.operatorsLabel)) + 0.01
                 operatorsTargets[len(self.operatorsLabel)-1] = 0.99
@@ -49,8 +53,12 @@ class Recognizer():
                 label = int(correctLabel[i])
                 numbersTargets = np.zeros(len(self.numbersLabel)) + 0.01
                 numbersTargets[label] = 0.99
-                while(np.argmax(self.nNumbers.query(inputs)) != label):
+                if (SettingsController.adjustAll):
                     self.nNumbers.train(inputs, numbersTargets)
                     print("Number")
+                else:
+                    while(np.argmax(self.nNumbers.query(inputs)) != label):
+                        self.nNumbers.train(inputs, numbersTargets)
+                        print("Number")
         self.nNumbers.saveAs(SettingsController.numbersNetworkPath)
         self.nOperators.saveAs(SettingsController.operatorsNetworkPath)
