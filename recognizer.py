@@ -1,6 +1,6 @@
 import numpy as np
-import NeuralNetwork as NN
-from SettingsController import SettingsController
+import neural_network as NN
+from settings_controller import SettingsController
 SettingsController.loadFrom(SettingsController.DEFAULT_PATH)
 
 class Recognizer():

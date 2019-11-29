@@ -1,8 +1,8 @@
 from win32api import GetSystemMetrics
-from SymbolFinder import SymbolFinder
-from Recognizer import Recognizer
-from SettingsController import SettingsController
-from Calculator import Calculator
+from symbol_finder import SymbolFinder
+from recognizer import Recognizer
+from settings_controller import SettingsController
+from calculator import Calculator
 
 import kivy
 from kivy.config import Config

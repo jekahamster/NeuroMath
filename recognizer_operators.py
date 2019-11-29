@@ -1,8 +1,8 @@
-from SettingsController import SettingsController
+from settings_controller import SettingsController
 from PIL import Image
 import json
 import numpy as np
-import NeuralNetwork as NN
+import neural_network as NN
 
 SettingsController.loadFrom()
 

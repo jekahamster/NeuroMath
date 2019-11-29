@@ -1,5 +1,5 @@
 import numpy as np
-import NeuralNetwork as NN
+import neural_network as NN
 
 def test(networkFilePath, testFilePath):
 	if (testFilePath == ""):

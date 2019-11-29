@@ -1,5 +1,5 @@
 import numpy as np
-import NeuralNetwork as NN
+import neural_network as NN
 
 inputNodes   = 28*28
 hiddenNodes  = 100
