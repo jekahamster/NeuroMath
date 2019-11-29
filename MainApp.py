@@ -1,8 +1,12 @@
 from win32api import GetSystemMetrics
-from symbol_finder import SymbolFinder
 from recognizer import Recognizer
 from settings_controller import SettingsController
 from calculator import Calculator
+if (SettingsController.recursiveFinder == False):
+    from symbol_finder import SymbolFinder
+else:
+    from recursive_symbol_finder import SymbolFinder
+
 
 import kivy
 from kivy.config import Config
@@ -20,9 +24,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivymd.theming import ThemeManager
 
-
-WINDOW_WIDTH  = GetSystemMetrics(0)
-WINDOW_HEIGHT = GetSystemMetrics(1)
 
 # Config.write()
 # Window.size = (900, 500)

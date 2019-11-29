@@ -17,9 +17,9 @@ class SymbolFinder:
 	@staticmethod
 	def find(imgPath):
 		img = cv2.imread(imgPath)
-		img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+		imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-		symbolCoordinates = SymbolFinder.findSymbol(img)
+		symbolCoordinates = SymbolFinder.findSymbol(imgray)
 		imgSymbols = []
 		for sc in symbolCoordinates:
 			left_top 	 = sc["left_top"]
@@ -44,10 +44,11 @@ class SymbolFinder:
 					finalResImg[i+3][j+3] = resImg[i][j]
 
 			imgSymbols.append(finalResImg)
-			cv2.imshow("", finalResImg) 
-			cv2.waitKey(0)
-			cv2.destroyAllWindows()
-
+			img = cv2.rectangle(img,(left_top.first, left_top.second),
+				(right_bottom.first, right_bottom.second), (0, 255, 0), 2)
+		cv2.imshow("", img)
+		cv2.waitKey(0)
+		cv2.destroyAllWindows()
 		return imgSymbols
 
 	@staticmethod
@@ -58,8 +59,8 @@ class SymbolFinder:
 
 		visited = np.array([[0 for i in range(m)] for j in range(n)], dtype=np.uint8)
 
-		for y in range(n):
-			for x in range(m):
+		for x in range(m):
+			for y in range(n):
 				if (matrix[y][x] > 0) and (visited[y][x] == 0):
 					out.append(SymbolFinder.trav(x, y, matrix, visited))
 
