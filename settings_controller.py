@@ -19,4 +19,4 @@ class SettingsController():
         SettingsController.theme                = data["Theme"]
         SettingsController.primaryPalette       = data["PrimaryPalette"]
         SettingsController.adjustAll            = bool(data["AdjustAll"])
-        SettingsController.recursiveFinder      = int(data["RecursiveFinder"])
+        SettingsController.finderMode           = int(data["FinderMode"])

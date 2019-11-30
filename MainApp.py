@@ -4,12 +4,12 @@ import threading
 from recognizer import Recognizer
 from settings_controller import SettingsController
 from calculator import Calculator
-if (SettingsController.recursiveFinder == 0):
+if (SettingsController.finderMode == 0):
     from symbol_finder import SymbolFinder
-elif (SettingsController.recursiveFinder == 1):
+elif (SettingsController.finderMode == 1):
     from recursive_symbol_finder import SymbolFinder
-elif (SettingsController.recursiveFinder == 2):
-    from new_symbol_finder import SymbolFinder
+elif (SettingsController.finderMode == 2):
+    from sector_symbol_finder import SymbolFinder
 
 
 import kivy
@@ -18,6 +18,7 @@ SettingsController.loadFrom(SettingsController.DEFAULT_PATH)
 Config.set("graphics", "resizable", SettingsController.windowResizable)
 Config.set("graphics", "width", SettingsController.windowWidth)
 Config.set("graphics", "height", SettingsController.windowHeight)
+Config.set("kivy","window_icon", "nm1.ico")
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.graphics import Color, Ellipse, Line, Rectangle
@@ -58,8 +59,8 @@ class Container(BoxLayout):
     def recognize(self, canvas):
         PATH = SettingsController.canvasImg
         canvas.export_to_png(PATH)
-        threading.Thread(target=self.recognizeInNewThread, args=(PATH, ), daemon=True).start()
         self.ids.text_input.text = "Loading..."
+        threading.Thread(target=self.recognizeInNewThread, args=(PATH, ), daemon=True).start()
 
     def recognizeInNewThread(self, PATH):
         self.imgList = SymbolFinder.find(PATH)
@@ -132,6 +133,7 @@ class CanvasWidget(Widget):
 class NetworkApp(App):
     theme_cls = ThemeManager()
     title = "NeuroMath"
+    icon = "NM.ico"
     def build(self):
         self.theme_cls.theme_style = SettingsController.theme
         self.theme_cls.primary_palette = SettingsController.primaryPalette
