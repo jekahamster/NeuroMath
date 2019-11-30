@@ -4,10 +4,12 @@ import threading
 from recognizer import Recognizer
 from settings_controller import SettingsController
 from calculator import Calculator
-if (SettingsController.recursiveFinder == False):
+if (SettingsController.recursiveFinder == 0):
     from symbol_finder import SymbolFinder
-else:
+elif (SettingsController.recursiveFinder == 1):
     from recursive_symbol_finder import SymbolFinder
+elif (SettingsController.recursiveFinder == 2):
+    from new_symbol_finder import SymbolFinder
 
 
 import kivy

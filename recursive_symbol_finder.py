@@ -1,6 +1,5 @@
 import cv2
-import numpy as np
-import math 
+import numpy as np 
 
 class Pair:
 	first = 0
