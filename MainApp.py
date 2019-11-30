@@ -1,4 +1,6 @@
 from win32api import GetSystemMetrics
+import threading
+
 from recognizer import Recognizer
 from settings_controller import SettingsController
 from calculator import Calculator
@@ -54,6 +56,10 @@ class Container(BoxLayout):
     def recognize(self, canvas):
         PATH = SettingsController.canvasImg
         canvas.export_to_png(PATH)
+        threading.Thread(target=self.recognizeInNewThread, args=(PATH, ), daemon=True).start()
+        self.ids.text_input.text = "Loading..."
+
+    def recognizeInNewThread(self, PATH):
         self.imgList = SymbolFinder.find(PATH)
         outputList = self.recognizer.recognize(self.imgList)
         outputStr = "".join(outputList)
