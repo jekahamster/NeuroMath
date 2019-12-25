@@ -29,7 +29,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivymd.theming import ThemeManager
 
-
 # Config.write()
 # Window.size = (900, 500)
 # Window.clearcolor = (.70, .70, .70, 1)
@@ -65,6 +64,7 @@ class Container(BoxLayout):
     def recognizeInNewThread(self, PATH):
         self.imgList = SymbolFinder.find(PATH)
         outputList = self.recognizer.recognize(self.imgList)
+        print(outputList)
         outputStr = "".join(outputList)
         self.ids.text_input.text = outputStr
         try:

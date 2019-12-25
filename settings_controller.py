@@ -10,9 +10,11 @@ class SettingsController():
 
         SettingsController.numbersNetworkPath   = data["NumbersNetworkPath"]
         SettingsController.operatorsNetworkPath = data["OperatorsNetworkPath"]
+        SettingsController.lettersNetworkPath   = data["LettersNetworkPath"]
         SettingsController.canvasImg            = data["CanvasImg"]
         SettingsController.numberLabels         = data["NumberLabels"]
         SettingsController.operatorLabels       = data["OperatorLabels"]
+        SettingsController.lettersLabels        = data["LettersLabels"]
         SettingsController.windowHeight         = data["WindowHeight"]
         SettingsController.windowWidth          = data["WindowWidth"]
         SettingsController.windowResizable      = data["WindowResizable"]

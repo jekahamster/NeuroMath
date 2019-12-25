@@ -1,5 +1,5 @@
 import cv2
-import numpy as np 
+import numpy as np
 
 class Pair:
 	first = 0
@@ -25,9 +25,9 @@ class SymbolFinder:
 			right_bottom = sc["right_bottom"]
 			coordinates  = sc["coordinates"]
 			
-			n = right_bottom.second - left_top.second 	+1 
+			n = right_bottom.second - left_top.second 	+1
 			m = right_bottom.first - left_top.first 	+1
-			
+
 			side 	= max(n, m)
 			shiftX	= (side - m) // 2
 			shiftY 	= (side - n) // 2
@@ -91,7 +91,7 @@ class SymbolFinder:
 
 			if (data[y-1][x] > 0) and (visited[y-1][x] == 0):
 				stack.append(Pair(x, y-1))
-				visited[y-1][x] = 1	
+				visited[y-1][x] = 1
 				group.add(Pair(x, y-1))
 
 			elif (data[y][x+1] > 0) and (visited[y][x+1] == 0):

@@ -3,12 +3,12 @@ import neural_network as NN
 
 inputNodes   = 28*28
 hiddenNodes  = 100
-outputNodes  = 10
+outputNodes  = 11
 learningRate = 0.1
 epochs 		 = 10
 
 n = NN.NeuralNetwork()
-n.init(learningRate, [inputNodes, hiddenNodes, outputNodes])
+n.init(learningRate, [inputNodes, hiddenNodes, 50, outputNodes])
 
 dataFile = open("mnist_dataset/mnist_train.csv", "r")
 dataList = dataFile.readlines()
