@@ -69,18 +69,19 @@ class Container(BoxLayout):
         self.ids.text_input.text = outputStr
         try:
             ans, mode = Calculator.calc(outputStr)
+            print(mode)
             if mode == Calculator.DEFAULT:
                 pass
             elif mode == Calculator.EQUALITY:
                 self.ids.text_input.text += " = "+str(ans)
             elif mode == Calculator.INEQUALITY:
                 self.ids.text_input.text += " is "+str(ans)
-        except SyntaxError:
-            pass
+        # except SyntaxError:
+        #     pass
         except ZeroDivisionError:
             pass
-        except TypeError:
-            pass
+        # except TypeError:
+        #     pass
         self.prevAns = ""
 
     def adjust(self, text):

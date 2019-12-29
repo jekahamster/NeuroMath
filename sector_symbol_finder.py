@@ -13,12 +13,12 @@ class Pair:
 
 class SymbolFinder:
 
-	@staticmethod 
+	@staticmethod
 	def find(imgPath):
 		img = cv2.imread(imgPath)
 		imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-		
+
 		coords = SymbolFinder.findSymbol(imgray)
 		imgSymbols = []
 
@@ -26,7 +26,7 @@ class SymbolFinder:
 			left_top 	 = c[0]
 			right_bottom = c[1]
 
-			n = right_bottom.y - left_top.y + 1 
+			n = right_bottom.y - left_top.y + 1
 			m = right_bottom.x - left_top.x + 1
 
 			side 	= max(n, m)
@@ -50,7 +50,7 @@ class SymbolFinder:
 		for c in coords:
 			cv2.rectangle(img, (c[0].x, c[0].y),
 				(c[1].x, c[1].y), (0, 255, 0), 2)
-		
+
 		cv2.imshow("", img)
 		cv2.waitKey(0)
 		cv2.destroyAllWindows()
@@ -63,11 +63,11 @@ class SymbolFinder:
 		coords = []
 
 		for partCoord in partCoords:
-			coords.append( SymbolFinder.findEdges(img, partCoord[0].x, partCoord[0].y, 
+			coords.append( SymbolFinder.findEdges(img, partCoord[0].x, partCoord[0].y,
 				partCoord[1].x, partCoord[1].y) )
 
 		return coords # [Pair<int, int>, Pair<int, int>]
-		
+
 	@staticmethod
 	def takeAPart(img):
 		coords = []
@@ -81,7 +81,7 @@ class SymbolFinder:
 
 
 		return coords  # [Pair<int, int>, Pair<int, int>]
-		
+
 	@staticmethod
 	def findEdges(img, x1, y1, x2, y2):
 		left_top = Pair(99999, 99999)
@@ -106,12 +106,12 @@ class SymbolFinder:
 	def findY(img):
 		coords = []
 
-		prevIsWhite = False 
+		prevIsWhite = False
 		for y in range(len(img)):
 			isWhite = False
 			for x in range(len(img[0])):
 				if (img[y][x] > 0):
-					isWhite = True 
+					isWhite = True
 					break
 			if (prevIsWhite != isWhite):
 				coords.append(y)
@@ -124,16 +124,15 @@ class SymbolFinder:
 	def findX(img, y1, y2):
 		coords = []
 
-		prevIsWhite = False 
+		prevIsWhite = False
 		for x in range(len(img[0])):
 			isWhite = False
 			for y in range(y1, y2+1):
 				if (img[y][x] > 0):
-					isWhite = True 
+					isWhite = True
 					break
 			if (prevIsWhite != isWhite):
 				coords.append(x)
 			prevIsWhite = isWhite
 
 		return coords # [int]
-

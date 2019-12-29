@@ -1,32 +1,56 @@
-from math import factorial
+from settings_controller import SettingsController
+from math import factorial, pi, e, sin, cos, tan, log10
+SettingsController.loadFrom("settings.json")
 
 class Calculator():
     DEFAULT     = 0
     EQUALITY    = 1
     INEQUALITY  = 2
 
+    replacement = {
+        "**"    : ['^'],
+        "=="    : ["="],
+        "<="    : ["<=="],
+        ">="    : [">=="],
+        "pi"    : ["π"],
+        "sin"   : ['5in'],
+        "cos"   : ['c05', 'co5', 'c0s'],
+        "lg"    : ['e9', 'eg', 'l9'],
+        "ln"    : ['en'],
+        "log"   : ['e09', 'l09', 'l0g', 'lo9', 'eo9', 'eog', 'e0g'],
+    }
+
+
 
     @staticmethod
     def calc(str):
-        str = str.replace("^", "**")
-        str = str.replace("=", "==")
-        str = str.replace("<==", "<=")
-        str = str.replace(">==", ">=")
 
-        mode = Calculator.DEFAULT
-        for char in str:
-            if char in ["<", ">", "="]:
-                mode = Calculator.INEQUALITY
-                break
-            elif char in ["+", "-", "/", "*", "^", "!"]:
-                mode = Calculator.EQUALITY
+        for i in Calculator.replacement.keys():
+            for j in Calculator.replacement[i]:
+                print(i, j)
+                str = str.replace(j, i)
+                print(str)
+
 
         while (str.find("!") != -1):
             findex = str.find("!")
             ans, start, stop = Calculator.replaceFactorial(str[:findex+1], findex)
             str = str.replace(str[start:stop]+"!", "factorial("+ans+")")
 
-        return eval(str), mode
+        res = ""
+        mode = Calculator.DEFAULT
+        for char in str:
+            if char in ["<", ">", "="]:
+                mode = Calculator.INEQUALITY
+                break
+            else:
+                try:
+                    res = eval(str)
+                    mode = Calculator.EQUALITY
+                except Exception:
+                    mode = Calculator.DEFAULT
+        return res, mode
+
 
 
     @staticmethod
