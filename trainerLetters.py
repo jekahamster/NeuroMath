@@ -8,13 +8,13 @@ labels = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
 
 
 inputNodes   = 28*28
-hiddenNodes  = 200
+hiddenNodes  = 400
 outputNodes  = 27
 learningRate = 0.2
 epochs 		 = 10
 
 n = NN.NeuralNetwork()
-n.init(learningRate, [inputNodes, hiddenNodes, outputNodes])
+n.init(learningRate, [inputNodes, 200, 50, outputNodes])
 
 train_images, train_labels = emnist.extract_training_samples("letters")
 test_images, test_labels = emnist.extract_test_samples("letters")

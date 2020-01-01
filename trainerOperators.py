@@ -159,13 +159,13 @@ labels = ["+", "-", "/", "*", "^", "(", ")", "<", ">", "=", "!",
           ".", "π", "%", "√", "|", ""]
 
 inputNodes   = 28*28
-hiddenNodes  = 100
+hiddenNodes  = 200
 outputNodes  = len(labels)
 learningRate = 0.1
 epochs 		 = 5
 
 n = NN.NeuralNetwork()
-n.init(learningRate, [inputNodes, 50, outputNodes])
+n.init(learningRate, [inputNodes, 300, outputNodes])
 
 for e in range(epochs):
     print("Epoch #", e+1)

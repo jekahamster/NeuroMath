@@ -68,7 +68,7 @@ class Container(BoxLayout):
         outputStr = "".join(outputList)
         self.ids.text_input.text = outputStr
         try:
-            ans, mode = Calculator.calc(outputStr)
+            ans, mode = Calculator().calc(outputStr)
             print(mode)
             if mode == Calculator.DEFAULT:
                 pass
