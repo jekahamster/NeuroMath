@@ -1,4 +1,3 @@
-from win32api import GetSystemMetrics
 import threading
 
 from recognizer import Recognizer
