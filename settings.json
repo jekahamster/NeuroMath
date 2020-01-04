@@ -12,8 +12,8 @@
   "WindowWidth":          "1200",
   "WindowHeight":         "500",
   "WindowResizable":      "True",
-  "Theme":                "Dark",
-  "PrimaryPalette":       "Yellow",
+  "Theme":                "Light",
+  "PrimaryPalette":       "Blue",
 
   "THEMES":               ["Light", "Dark"],
   "PRIMARY_PPALLETES":    ["Pink", "Blue", "Indigo", "BlueGrey", "Brown", "LightBlue",

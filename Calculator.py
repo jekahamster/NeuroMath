@@ -131,7 +131,7 @@ class TextFormatter:
 	def format(str):
 		expression = [[]]
 		specSym = []
-		prev = ''
+		prev = ""
 		for i in TextFormatter.replacement.keys():
 			for j in TextFormatter.replacement[i]:
 				str = str.replace(j, i)
@@ -156,7 +156,7 @@ class TextFormatter:
 			else:
 				if (char == "^"):
 					expression[i].append("**")
-				elif (char == "-") and (prev in ["(", "-", "+", "/", "*", "%", "^"]):
+				elif (char == "-") and ((prev in ["(", "-", "+", "/", "*", "%", "^"]) or (prev == "")):
 					expression[i] += ["(", "0","-", "1", ")", "*"]
 				else:
 					expression[i].append(char)
