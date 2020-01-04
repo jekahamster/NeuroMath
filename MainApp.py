@@ -36,10 +36,11 @@ color = 1
 brushSize = 5
 
 class Container(BoxLayout):
-    prevAns = ""
-    imgList = None
-    recognizer = Recognizer()
-    textColor = [1, 1, 1, 1] if (SettingsController.theme == "Dark") else [0, 0, 0, 1]
+    prevAns     = ""
+    imgList     = None
+    recognizer  = Recognizer()
+    textColor   = [1, 1, 1, 1] if (SettingsController.theme == "Dark") else [0, 0, 0, 1]
+    threadWorking = False
 
     def changeColor(self, c):
         global color
@@ -59,7 +60,9 @@ class Container(BoxLayout):
         PATH = SettingsController.canvasImg
         canvas.export_to_png(PATH)
         self.ids.text_input.text = "Loading..."
-        threading.Thread(target=self.recognizeInNewThread, args=(PATH, ), daemon=True).start()
+        if not self.threadWorking:
+            self.threadWorking = True
+            threading.Thread(target=self.recognizeInNewThread, args=(PATH, ), daemon=True).start()
 
     def recognizeInNewThread(self, PATH):
         self.imgList = SymbolFinder.find(PATH)
@@ -77,25 +80,33 @@ class Container(BoxLayout):
             elif mode == Calculator.INEQUALITY:
                 self.ids.text_input.text += " is "+str(ans)
         except SyntaxError:
-            pass
+            print("EXCEPTION => SyntaxError")
         except ZeroDivisionError:
-            pass
+            print("EXCEPTION => ZeroDivisionErro")
         except TypeError:
-            pass
+            print("EXCEPTION => TypeError")
+        except IndexError:
+            print("EXCEPTION => IndexError")
         self.prevAns = ""
+        self.threadWorking = False
+
 
     def adjust(self, text):
         if text == self.prevAns:
             return
         else:
             self.prevAns = text
-        self.ids.text_input.text = "Adjusting "+str(text) 
         text = list(text)
-        threading.Thread(target=self.adjustInNewThread, args=(text, ), daemon=True).start()
+
+        if not self.threadWorking:
+            self.threadWorking = True
+            self.ids.text_input.text = "Adjusting "+"".join(text) 
+            threading.Thread(target=self.adjustInNewThread, args=(text, ), daemon=True).start()
 
     def adjustInNewThread(self, text):
         self.recognizer.adjust(self.imgList, text)
         self.ids.text_input.text = "".join(text)
+        self.threadWorking = False
 
 
 class CanvasWidget(Widget):
