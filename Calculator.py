@@ -154,10 +154,12 @@ class TextFormatter:
 				specSym.append(char)
 
 			else:
-				if (char != "^"):
-					expression[i].append(char)
-				else:
+				if (char == "^"):
 					expression[i].append("**")
+				elif (char == "-") and (prev in ["(", "-", "+", "/", "*", "%", "^"]):
+					expression[i] += ["(", "0","-", "1", ")", "*"]
+				else:
+					expression[i].append(char)
 			prev = char
 
 

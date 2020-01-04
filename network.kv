@@ -35,7 +35,7 @@
 
                     MDLabel:
                         text: "Correct?"
-                        color: [1, 1, 1, 1]
+                        color: root.textColor
                     MDRaisedButton:
                         text: "Adjust"
                         on_release:
@@ -49,7 +49,7 @@
                     orientation: "vertical"
                     MDLabel:
                         text: "Pen"
-                        color: [1, 1, 1, 1]
+                        color: root.textColor
                     MDCheckbox:
                         active: True
                         group: "1"
@@ -61,7 +61,7 @@
                     orientation: "vertical"
                     MDLabel:
                         text: "Lastic"
-                        color: [1, 1, 1, 1]
+                        color: root.textColor
                     MDCheckbox:
                         group: "1"
                         size_hint: None, None
@@ -86,7 +86,7 @@
                     size_hint: 0.1, 1
 
                     MDLabel:
-                        color: [1, 1, 1, 1]
+                        color: root.textColor
                         text: str(slider.value)
 
         BoxLayout:
@@ -110,5 +110,5 @@
                 anchor_x: "center"
                 anchor_y: "center"
                 halign: "center"
-                color: [1, 1, 1, 1]
+                color: root.textColor
                 font_size: "10sp"

@@ -39,6 +39,7 @@ class Container(BoxLayout):
     prevAns = ""
     imgList = None
     recognizer = Recognizer()
+    textColor = [1, 1, 1, 1] if (SettingsController.theme == "Dark") else [0, 0, 0, 1]
 
     def changeColor(self, c):
         global color
@@ -75,12 +76,12 @@ class Container(BoxLayout):
                 self.ids.text_input.text += " = "+str(ans)
             elif mode == Calculator.INEQUALITY:
                 self.ids.text_input.text += " is "+str(ans)
-        # except SyntaxError:
-        #     pass
+        except SyntaxError:
+            pass
         except ZeroDivisionError:
             pass
-        # except TypeError:
-        #     pass
+        except TypeError:
+            pass
         self.prevAns = ""
 
     def adjust(self, text):
@@ -88,8 +89,13 @@ class Container(BoxLayout):
             return
         else:
             self.prevAns = text
+        self.ids.text_input.text = "Adjusting "+str(text) 
         text = list(text)
+        threading.Thread(target=self.adjustInNewThread, args=(text, ), daemon=True).start()
+
+    def adjustInNewThread(self, text):
         self.recognizer.adjust(self.imgList, text)
+        self.ids.text_input.text = "".join(text)
 
 
 class CanvasWidget(Widget):
