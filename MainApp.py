@@ -87,6 +87,8 @@ class Container(BoxLayout):
             print("EXCEPTION => TypeError")
         except IndexError:
             print("EXCEPTION => IndexError")
+        except ValueError:
+            print("EXCEPTION => ValueError")
         self.prevAns = ""
         self.threadWorking = False
 
@@ -107,7 +109,14 @@ class Container(BoxLayout):
         try:
             self.recognizer.adjust(self.imgList, text)
             self.ids.text_input.text = "".join(text)
+
+            PATH = SettingsController.canvasImg
+            self.ids.text_input.text = "Loading..."
+            threading.Thread(target=self.recognizeInNewThread, args=(PATH, ), daemon=True).start()
+
         except Exception:
+            recognizer = Recognizer()
+            self.ids.text_input.text = "Error"
             print("EXCEPTION => Adjust exception")
         self.threadWorking = False
 

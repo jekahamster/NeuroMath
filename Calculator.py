@@ -1,4 +1,4 @@
-from math import factorial, pi, e, sin, cos, tan, log
+from math import factorial, pi, e, sin, cos, tan, log, asin, acos, atan, sinh, cosh, tanh, asinh, acosh, atanh
 
 class Stack:
 	def __init__(self):
@@ -65,6 +65,13 @@ class Tree:
 				if (Calculator.CLASSES["function"][node.getData()] == 2):
 					tempL = self.calc(node.left)
 					return eval(str(node)+"("+str(tempR)+","+str(tempL)+")")
+
+				elif (node.getData() == "ln"):
+					return eval("log("+str(tempR)+", e)")
+
+				elif (node.getData() == "lg"):
+					return eval("log("+str(tempR)+", 10)")
+
 				return eval(str(node)+"("+str(tempR)+")")
 
 			elif (node.type == "specFunc"):
@@ -127,14 +134,21 @@ class Pair:
 
 class TextFormatter:
 	replacement = {
-        "=="    : ["="],
-        "<="    : ["<=="],
-        ">="    : [">=="],
+        "=="    : ['='],
+        "<="    : ['<=='],
+        ">="    : ['>=='],
         "sin"   : ['5in'],
         "cos"   : ['c05', 'co5', 'c0s'],
         "lg"    : ['e9', 'eg', 'l9'],
         "ln"    : ['en'],
         "log"   : ['e09', 'l09', 'l0g', 'lo9', 'eo9', 'eog', 'e0g'],
+        "exp"	: ['l*p', 'lxp', 'e*p'],
+        "asin"	: ['a5in'],
+        "acos" 	: ['ac05', 'aco5', 'ac0s'],
+        "sinh"	: ['5inh'],
+        "cosh"	: ['c05h', 'co5h', 'c0sh'],
+        "asinh"	: ['a5inh'],
+        "acosh"	: ['ac05h', 'aco5h', 'ac0sh']
     }
 
 	@staticmethod
@@ -143,7 +157,7 @@ class TextFormatter:
 		specSym = []
 		prev = ""
 		brackets = Stack() 		# "usr" / "sys"
-		
+
 		for i in TextFormatter.replacement.keys():
 			for j in TextFormatter.replacement[i]:
 				str = str.replace(j, i)
@@ -223,7 +237,7 @@ class TextFormatter:
 					else:
 						expression[i].append(char)
 
-				
+
 			prev = char
 
 		while (len(brackets) != 0):
@@ -250,16 +264,28 @@ class Calculator:
 			},
 		"specSym": ["(", ")", "|"],
 		"const" : {
-				"\u03c0": pi, 
+				"\u03c0": pi,
 				"e"		: e
 			},
 		"function": {
-				"sin": 1, 
-				"cos": 1, 
-				"tan": 1, 
-				"log": 2
+				"log": 	 2,
+				"ln": 	 1,
+				"lg":	 1,
+				"exp": 	 1,
+				"sin": 	 1,
+				"cos": 	 1,
+				"tan": 	 1,
+				"asin":  1,
+				"acos":  1,
+				"atan":  1,
+				"sinh":  1,
+				"cosh":  1,
+				"tanh":  1,
+				"asinh": 1,
+				"acosh": 1,
+				"atanh": 1
 			},
-		"specFunc": ["!", "\u221a"]
+		"specFunc": ["!"]
 	}
 
 	DEFAULT		= 1
@@ -292,7 +318,8 @@ class Calculator:
 
 
 	def getRes(self, list):
-		print("For Excpression", list)
+		print("For Excpression:", list)
+		print("Str:", "".join(list))
 		for charSeq in list:
 			print("Current: ", charSeq)
 			if (Calculator.isNumber(charSeq)):
@@ -352,8 +379,9 @@ class Calculator:
 		tree = Tree(self.nodeStack.pop())
 		print("Tree:", end=" ")
 		tree.inOrder(tree.root)
-		print("Res:", round(tree.calc(tree.root), 10))
-		return round(tree.calc(tree.root), 10)
+		res = round(tree.calc(tree.root), 10)
+		print("Res:", res)
+		return res
 
 	def checkOper(self, charSeq):
 		if (self.operStack.isEmpty()):

@@ -120,7 +120,7 @@ class Recognizer():
                         while(np.argmax(self.nLetters.query(inputs)) != label):
                             self.nLetters.train(inputs, lettersTargets)
                             print("Letter")
-
+        print("Save networks settings")
         self.nNumbers.saveAs(SettingsController.numbersNetworkPath)
         self.nOperators.saveAs(SettingsController.operatorsNetworkPath)
         self.nLetters.saveAs(SettingsController.lettersNetworkPath)
