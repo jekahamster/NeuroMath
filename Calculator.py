@@ -114,6 +114,16 @@ class Node:
 	def isNumber(self):
 		return Calculator.isNumber(self.data)
 
+class Pair:
+	def __init__(self, first, second):
+		self.first = first
+		self.second = second
+
+	def __repr__(self):
+		return "P({0} ; {1})".format(self.first, self.second)
+
+	def __eq__(self, other):
+		return (self.first == other.first) and (self.second == other.second)
 
 class TextFormatter:
 	replacement = {
@@ -132,6 +142,8 @@ class TextFormatter:
 		expression = [[]]
 		specSym = []
 		prev = ""
+		brackets = Stack() 		# "usr" / "sys"
+		
 		for i in TextFormatter.replacement.keys():
 			for j in TextFormatter.replacement[i]:
 				str = str.replace(j, i)
@@ -139,6 +151,10 @@ class TextFormatter:
 
 		i = 0
 		for char in str:
+			print("Current:", char)
+			print(brackets)
+			print(expression)
+			print()
 			if (Calculator.isNumber(char) or char == ".") and (Calculator.isNumber(prev) or prev == "."):
 				expression[i][len(expression[i])-1] += char
 			elif char.isalpha() and prev.isalpha():
@@ -148,6 +164,8 @@ class TextFormatter:
 				specSym[len(specSym)-1] += char
 
 			elif char in ["=", "<", ">"]:
+				while (len(brackets) != 0):
+					expression[i] += list(brackets.pop().first)
 				prev = char
 				i += 1
 				expression.append([])
@@ -156,12 +174,62 @@ class TextFormatter:
 			else:
 				if (char == "^"):
 					expression[i].append("**")
-				elif (char == "-") and ((prev in ["(", "-", "+", "/", "*", "%", "^"]) or (prev == "")):
-					expression[i] += ["(", "0","-", "1", ")", "*"]
-				else:
+					expression[i].append("(")
+					brackets.push(Pair(")", "sys"))
+
+				elif (char == "("):
+					brackets.push(Pair(")", "usr"))
 					expression[i].append(char)
+
+				elif (char == ")"):
+					brackets.pop()
+					expression[i].append(char)
+
+				elif (char == "|"):
+					if (brackets.has(Pair("|", "usr"))):
+						while (brackets.peek().first != "|"):
+							expression[i] += list(brackets.pop().first)
+						brackets.pop()
+					else:
+						brackets.push(Pair("|", "usr"))
+					expression[i].append(char)
+
+				elif (char in list(Calculator.CLASSES["operator"].keys())+Calculator.CLASSES["specSym"]):
+					if (len(brackets) == 0) or (brackets.peek().second == "usr"):
+						if (char == "-") and ((prev in ["(", "-", "+", "/", "*", "%", "^", "=", "<", ">"]) or (prev == "")):
+							expression[i] += ["(", "0","-", "1", ")", "*"]
+
+						elif (char == "-") and (prev == "|") and (brackets.peek().first == "|"):
+							expression[i] += ["(", "0","-", "1", ")", "*"]
+
+						else:
+							expression[i].append(char)
+
+					elif (len(brackets) != 0) and (brackets.peek().second == "sys"):
+						if (char == "-") and ((prev in ["(", "-", "+", "/", "*", "%", "^", "=", "<", ">"]) or (prev == "")):
+							expression[i] += ["(", "0","-", "1", ")", "*"]
+
+						else:
+							expression[i] += list(brackets.pop().first)
+							expression[i].append(char)
+
+					else:
+						print("!!!!")
+
+				else:
+					if (char == "\u221a"):
+						expression[i].append("(")
+						brackets.push(Pair([")", "**", "0.5"], "sys"))
+					else:
+						expression[i].append(char)
+
+				
 			prev = char
 
+		while (len(brackets) != 0):
+			expression[i] += list(brackets.pop().first)
+
+		print("STOP")
 
 		res = {
 			"expression": expression,
@@ -209,7 +277,9 @@ class Calculator:
 		res = []
 		print(obj)
 		for expr in obj["expression"]:
-			print("expr::", expr)
+			print("Expr", expr)
+			print()
+			print()
 			res.append(self.getRes(expr))
 		if len(obj["specSym"]) == 0:
 			return res[0], Calculator.EQUALITY
@@ -222,7 +292,7 @@ class Calculator:
 
 
 	def getRes(self, list):
-		print("List::", list)
+		print("For Excpression", list)
 		for charSeq in list:
 			print("Current: ", charSeq)
 			if (Calculator.isNumber(charSeq)):
@@ -238,6 +308,9 @@ class Calculator:
 				print()
 
 			elif (charSeq in self.CLASSES["specSym"]):
+				print(self.nodeStack)
+				print(self.operStack)
+				print()
 				self.checkSpecSym(charSeq)
 				print(self.nodeStack)
 				print(self.operStack)
@@ -259,7 +332,7 @@ class Calculator:
 
 			elif (charSeq in self.CLASSES["specFunc"]):
 				self.checkSpecFunc(charSeq)
-				self.checkSpecSym(charSeq)
+				# self.checkSpecSym(charSeq)
 				print(self.nodeStack)
 				print(self.operStack)
 				print()
@@ -277,12 +350,9 @@ class Calculator:
 		print()
 
 		tree = Tree(self.nodeStack.pop())
-		print("1::", tree.calc(tree.root))
-		print("1::", tree.calc(tree.root))
-		# print("2::", str(tree.calc(tree.root)))
-		# print( tree.calc(tree.root) )
+		print("Tree:", end=" ")
 		tree.inOrder(tree.root)
-		print(":::::::::::")
+		print("Res:", round(tree.calc(tree.root), 10))
 		return round(tree.calc(tree.root), 10)
 
 	def checkOper(self, charSeq):
@@ -339,7 +409,6 @@ class Calculator:
 				tempOper.setLeft(tempA)
 				tempOper.setRight(tempB)
 				self.nodeStack.push(tempOper)
-
 			temp = self.nodeStack.pop()
 			self.nodeStack.pop()
 			self.nodeStack.push(temp)

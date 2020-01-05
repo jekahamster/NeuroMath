@@ -33,13 +33,23 @@
                 BoxLayout:
                     orientation: "horizontal"
 
-                    MDLabel:
-                        text: "Correct?"
-                        color: root.textColor
-                    MDRaisedButton:
-                        text: "Adjust"
-                        on_release:
-                            root.adjust(text_input.text)
+                    AnchorLayout:
+                        MDRaisedButton:
+                            text: "DO IT"
+                            on_release:
+                                root.recognize(canvas_widget)
+                    AnchorLayout:
+                        MDLabel:
+                            text: "Correct?"
+                            padding_x: 0
+                            halign: "right"
+                            size_hint: 1, 0.6
+                            color: root.textColor
+                    AnchorLayout:
+                        MDRaisedButton:
+                            text: "Adjust"
+                            on_release:
+                                root.adjust(text_input.text)
         BoxLayout:
             orientation: "vertical"
 
@@ -97,11 +107,7 @@
                     on_release:
                         root.clear(canvas_widget)
 
-            AnchorLayout:
-                MDRaisedButton:
-                    text: "DO IT"
-                    on_release:
-                        root.recognize(canvas_widget)
+            
         AnchorLayout:
             size_hint: 1, None
             size: 0, 5

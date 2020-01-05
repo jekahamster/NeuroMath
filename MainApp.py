@@ -104,8 +104,11 @@ class Container(BoxLayout):
             threading.Thread(target=self.adjustInNewThread, args=(text, ), daemon=True).start()
 
     def adjustInNewThread(self, text):
-        self.recognizer.adjust(self.imgList, text)
-        self.ids.text_input.text = "".join(text)
+        try:
+            self.recognizer.adjust(self.imgList, text)
+            self.ids.text_input.text = "".join(text)
+        except Exception:
+            print("EXCEPTION => Adjust exception")
         self.threadWorking = False
 
 

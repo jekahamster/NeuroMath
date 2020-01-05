@@ -1,0 +1,114 @@
+
+<Container>:
+    pos: 0, 0
+    orientation: 'horizontal'
+    padding: 10
+    spacing: 30
+
+    AnchorLayout:
+        size_hint: 1.5, 1
+        CanvasWidget:
+            id: canvas_widget
+            canvas.before:
+                Color:
+                    rgba: .0, .0, .0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 20
+
+        BoxLayout:
+            orientation: "vertical"
+
+            AnchorLayout:
+                MDTextField:
+                    id: text_input
+                    # foreground_color: [0, 0, 0, 1]
+                    background_color: [1, 1, 1, 1]
+                    hint_text: "Result"
+
+            AnchorLayout:
+                BoxLayout:
+                    orientation: "horizontal"
+
+                    MDLabel:
+                        text: "Correct?"
+                        color: root.textColor
+                    MDRaisedButton:
+                        text: "Adjust"
+                        on_release:
+                            root.adjust(text_input.text)
+        BoxLayout:
+            orientation: "vertical"
+
+            BoxLayout:
+                orientation: "horizontal"
+                BoxLayout:
+                    orientation: "vertical"
+                    MDLabel:
+                        text: "Pen"
+                        color: root.textColor
+                    MDCheckbox:
+                        active: True
+                        group: "1"
+                        size_hint: None, None
+                        size: 50, 50
+                        on_release:
+                            root.changeColor(1)
+                BoxLayout:
+                    orientation: "vertical"
+                    MDLabel:
+                        text: "Lastic"
+                        color: root.textColor
+                    MDCheckbox:
+                        group: "1"
+                        size_hint: None, None
+                        size: 50, 50
+                        on_release:
+                            root.changeColor(0)
+
+            BoxLayout:
+                orientation: "horizontal"
+
+                AnchorLayout:
+                    MDSlider:
+                        id: slider
+                        min: 1
+                        max: 40
+                        step: 1
+                        value: 5
+                        on_touch_up:
+                            root.changeBrushSize(self.value)
+
+                AnchorLayout:
+                    size_hint: 0.1, 1
+
+                    MDLabel:
+                        color: root.textColor
+                        text: str(slider.value)
+
+        BoxLayout:
+            orientation: "horizontal"
+            AnchorLayout:
+                MDRaisedButton:
+                    text: "CLEAR"
+                    on_release:
+                        root.clear(canvas_widget)
+
+            AnchorLayout:
+                MDRaisedButton:
+                    text: "DO IT"
+                    on_release:
+                        root.recognize(canvas_widget)
+        AnchorLayout:
+            size_hint: 1, None
+            size: 0, 5
+            MDLabel:
+                text: "By Golovko"
+                anchor_x: "center"
+                anchor_y: "center"
+                halign: "center"
+                color: root.textColor
+                font_size: "10sp"
