@@ -192,6 +192,8 @@ class TextFormatter:
 					brackets.push(Pair(")", "sys"))
 
 				elif (char == "("):
+					if (Calculator.isNumber(prev)):
+						expression[i].append("*")
 					brackets.push(Pair(")", "usr"))
 					expression[i].append(char)
 
@@ -206,6 +208,8 @@ class TextFormatter:
 						brackets.pop()
 					else:
 						brackets.push(Pair("|", "usr"))
+						if (Calculator.isNumber(prev)):
+							expression[i].append("*")
 					expression[i].append(char)
 
 				elif (char in list(Calculator.CLASSES["operator"].keys())+Calculator.CLASSES["specSym"]):
