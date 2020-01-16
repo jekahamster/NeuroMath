@@ -184,7 +184,10 @@ class TextFormatter:
 				i += 1
 				expression.append([])
 				specSym.append(char)
-
+			elif (char in Calculator.CLASSES["const"].keys()) and \
+			(Calculator.isNumber(prev) or prev == ")" or (prev == "|" and not brackets.has(Pair("|", "usr")))):
+				expression[i].append("*")
+				expression[i].append(char)
 			else:
 				if (char == "^"):
 					expression[i].append("**")
