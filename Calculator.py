@@ -156,6 +156,7 @@ class TextFormatter:
 		expression = [[]]
 		specSym = []
 		prev = ""
+		prev2 = ""
 		brackets = Stack() 		# "usr" / "sys"
 
 		for i in TextFormatter.replacement.keys():
@@ -168,9 +169,11 @@ class TextFormatter:
 			print("Current:", char)
 			print(brackets)
 			print(expression)
+			print("PREV2", prev2)
 			print()
 			if (Calculator.isNumber(char) or char == ".") and (Calculator.isNumber(prev) or prev == "."):
 				expression[i][len(expression[i])-1] += char
+			
 			elif char.isalpha() and prev.isalpha():
 				expression[i][len(expression[i])-1] += char
 
@@ -195,7 +198,7 @@ class TextFormatter:
 					brackets.push(Pair(")", "sys"))
 
 				elif (char == "("):
-					if (Calculator.isNumber(prev)):
+					if (Calculator.isNumber(prev) or prev in Calculator.CLASSES["const"]) and (prev2 not in Calculator.CLASSES["function"].keys()):
 						expression[i].append("*")
 					brackets.push(Pair(")", "usr"))
 					expression[i].append(char)
@@ -246,6 +249,10 @@ class TextFormatter:
 
 
 			prev = char
+			try:
+				prev2 = expression[i][len(expression[i])-4]
+			except Exception:
+				pass 
 
 		while (len(brackets) != 0):
 			expression[i] += list(brackets.pop().first)
