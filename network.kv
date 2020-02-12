@@ -50,6 +50,21 @@
                             text: "Adjust"
                             on_release:
                                 root.adjust(text_input.text)
+        
+        BoxLayout:
+            orientation: "horizontal"
+            AnchorLayout:
+                MDRaisedButton:
+                    text: "Copy \u03c0"
+                    on_release:
+                        root.ids.text_input.text += "\u03c0"
+
+            AnchorLayout:
+                MDRaisedButton:
+                    text: "Copy \u221a"
+                    on_release:
+                        root.ids.text_input.text += "\u221a"
+
         BoxLayout:
             orientation: "vertical"
 

@@ -113,6 +113,17 @@ except Exception:
 if stopVal:
     exit()
 
+# try:
+#     import clipboard
+#     currentInstall = "Upgrading Clipboard"
+#     os.system("python -m pip install --upgrade clipboard")
+# except Exception:
+#     currentInstall = "Installing Clipboard"
+#     os.system("python -m pip install clipboard")
+
+# if stopVal:
+#     exit()
+
 try:
     import kivymd
     currentInstall = "Upgrading KivyMD"
