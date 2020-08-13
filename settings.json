@@ -13,7 +13,7 @@
   "WindowHeight":         "500",
   "WindowResizable":      "True",
   "Theme":                "Light",
-  "PrimaryPalette":       "DeepPurple",
+  "PrimaryPalette":       "Blue",
 
   "THEMES":               ["Light", "Dark"],
   "PRIMARY_PPALLETES":    ["Pink", "Blue", "Indigo", "BlueGrey", "Brown", "LightBlue",

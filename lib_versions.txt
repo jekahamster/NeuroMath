@@ -1,0 +1,7 @@
+cv2:     3.4.1
+numpy:   1.14.3
+scipy:   1.1.0
+PIL:     7.2.0
+kivy:    1.11.1
+kivymd:  0.100.2
+json:    2.0.9
