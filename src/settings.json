@@ -1,0 +1,22 @@
+{
+  "OperatorsNetworkPath": "NNOperators.json",
+  "NumbersNetworkPath":   "NNNumbers.json",
+  "LettersNetworkPath":   "NNLetters.json",
+  "CanvasImg":            "temp/temp_img.png",
+  "NumberLabels":         ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ""],
+  "OperatorLabels":       ["+", "-", "/", "*", "^", "(", ")", "<", ">", "=", "!", ".", "\u03c0", "%", "\u221a", "|", ""],
+  "LettersLabels":        ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+                           "q", "r", "s", "t", "u","v", "w", "x", "y", "z", ""],
+  "AdjustAll":            0,
+  "FinderMode":           2,
+  "WindowWidth":          "1200",
+  "WindowHeight":         "500",
+  "WindowResizable":      "True",
+  "Theme":                "Light",
+  "PrimaryPalette":       "DeepPurple",
+
+  "THEMES":               ["Light", "Dark"],
+  "PRIMARY_PPALLETES":    ["Pink", "Blue", "Indigo", "BlueGrey", "Brown", "LightBlue",
+                           "Purple", "Gray", "Yellow", "LightGreen", "DeepOrange",
+                           "Green", "Red", "Teal", "Orange", "Cyan", "Amber", "DeepPurple", "Lime"]
+}
